@@ -9,8 +9,26 @@
  * file that was distributed with this source code.
  */
 
-use Flarum\Database\Migration;
+// use Flarum\Database\Migration;
 
-return Migration::addColumns('posts', [
-    'auto_mod' => ['boolean', 'default' => 0],
-]);
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Builder;
+
+// return Migration::addColumns('posts', [
+//     'auto_mod' => ['boolean', 'default' => 0],
+// ]);
+
+
+return [
+    'up' => function (Builder $schema) {
+        if (!$schema->hasColumn('posts', 'auto_mod')) {
+            $schema->table('posts', function (Blueprint $table) use ($schema) {
+                $table->boolean('auto_mod')->default(0);
+            });
+        }
+
+    },
+    'down' => function (Builder $schema) {
+        
+    },
+];
