@@ -1,9 +1,9 @@
-import app from 'flarum/admin/app';
-import ExtensionPage from 'flarum/admin/components/ExtensionPage';
-import type Mithril from 'mithril';
+// import app from 'flarum/admin/app';
+import ExtensionPage from 'flarum/components/ExtensionPage';
+// import type Mithril from 'mithril';
 
 export default class FilterSettingsPage extends ExtensionPage {
-  oninit(vnode: Mithril.Vnode) {
+  oninit(vnode) {
     super.oninit(vnode);
   }
 
@@ -56,6 +56,24 @@ export default class FilterSettingsPage extends ExtensionPage {
               setting: 'fof-filter.emailWhenFlagged',
               label: app.translator.trans('fof-filter.admin.input.switch.email'),
             })}
+            <hr/>
+            <h2>阿里云内容安全检测</h2>
+            {this.buildSettingComponent({
+              type: 'boolean',
+              setting: 'hamcq-filter.aliyun-content-check',
+              label: "开启阿里云内容安全检测",
+            })}
+            {this.buildSettingComponent({
+              type: 'string',
+              setting: 'hamcq-filter.aliyun-content-check.access_id',
+              label: "ALIBABA_CLOUD_ACCESS_KEY_ID"
+            })}
+            {this.buildSettingComponent({
+              type: 'string',
+              setting: 'hamcq-filter.aliyun-content-check.access_sec',
+              label: "ALIBABA_CLOUD_ACCESS_KEY_SECRET",
+            })}
+
             <hr />
             {this.submitButton()}
           </form>

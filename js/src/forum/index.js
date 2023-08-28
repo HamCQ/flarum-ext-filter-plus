@@ -15,7 +15,7 @@ import app from 'flarum/forum/app';
 import CommentPost from 'flarum/forum/components/CommentPost';
 
 app.initializers.add(
-  'fof-filter',
+  'hamcq-filter-plus',
   () => {
     override(CommentPost.prototype, 'flagReason', function (original, flag) {
       if (flag.type() === 'autoMod') {

@@ -1,5 +1,5 @@
 {
-    "name": "fof/filter",
+    "name": "hamcq/filter-plus",
     "description": "Filter out words and phrases from forum posts",
     "type": "flarum-extension",
     "keywords": [
@@ -14,24 +14,23 @@
         {
             "name": "Katos",
             "email": "katos@flarum.org"
+        },
+        {
+            "name":"Emin.lin",
+            "email": "emin.lin@live.com"
         }
     ],
     "support": {
-        "issues": "https://github.com/friendsofflarum/filter/issues",
-        "source": "https://github.com/friendsofflarum/filter",
-        "forum": "https://discuss.flarum.org/d/5131"
+       
     },
-    "homepage": "https://friendsofflarum.org",
     "funding": [
-        {
-            "type": "website",
-            "url": "https://opencollective.com/fof/donate"
-        }
+       
     ],
     "require": {
         "flarum/core": "^1.2.0",
         "flarum/approval": "*",
-        "flarum/flags": "*"
+        "flarum/flags": "*",
+        "alibabacloud/green-20220302": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -40,7 +39,7 @@
     },
     "extra": {
         "flarum-extension": {
-            "title": "FoF Filter",
+            "title": "HamCQ Filter Plus",
             "category": "feature",
             "icon": {
                 "name": "fas fa-filter",
@@ -49,7 +48,7 @@
             }
         },
         "flagrow": {
-            "discuss": "https://discuss.flarum.org/d/5131"
+            "discuss": ""
         }
     }
 }

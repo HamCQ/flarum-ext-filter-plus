@@ -1,9 +1,9 @@
 import app from 'flarum/admin/app';
 import FilterSettingsPage from './components/FilterSettingsPage';
 
-app.initializers.add('fof-filter', () => {
+app.initializers.add('hamcq-filter-plus', () => {
   app.extensionData
-    .for('fof-filter')
+    .for('hamcq-filter-plus')
     .registerPage(FilterSettingsPage)
     .registerPermission(
       {

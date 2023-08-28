@@ -40,5 +40,6 @@ return [
     (new Extend\Settings())
         ->default('fof-filter.autoMergePosts', false)
         ->default('fof-filter.cooldown', 15)
-        ->default('fof-filter.emailWhenFlagged', false),
+        ->default('fof-filter.emailWhenFlagged', false)
+        ->default('hamcq-filter.aliyun-content-check', false),
 ];
