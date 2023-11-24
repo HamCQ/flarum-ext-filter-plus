@@ -29,6 +29,7 @@ use AlibabaCloud\Tea\Utils\Utils;
 use Exception;
 use AlibabaCloud\Tea\Exception\TeaError;
 use FoF\Filter\Model\CheckLog;
+use Illuminate\Support\Arr;
 
 class CheckPost
 {
@@ -63,7 +64,18 @@ class CheckPost
     public function handle(Saving $event)
     {
         $post = $event->post;
+        $data = $event->data;
 
+        //防止点赞重新触发审核
+        if ($post->exists && isset($data['attributes']['isLiked'])){
+            // $actor = $event->actor;
+            // app("log")->info($actor->id." like");
+            return;
+        }
+        if ($post->exists && Arr::has($data, 'attributes.reaction')) {
+            return;
+        }
+        
         if ($post->auto_mod || $event->actor->can('bypassFoFFilter', $post->discussion)) {
             return;
         }
