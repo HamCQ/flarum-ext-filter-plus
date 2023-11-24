@@ -73,7 +73,12 @@ export default class FilterSettingsPage extends ExtensionPage {
               setting: 'hamcq-filter.aliyun-content-check.access_sec',
               label: "ALIBABA_CLOUD_ACCESS_KEY_SECRET",
             })}
-
+            {this.buildSettingComponent({
+              type: 'string',
+              setting: 'hamcq-filter.aliyun-content-check.skip_label',
+              label: "SKIP_LABEL",
+              help: "like ad,nonsense ......",
+            })}
             <hr />
             {this.submitButton()}
           </form>

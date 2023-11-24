@@ -157,6 +157,8 @@ class CheckPost
     public function aliyunCheck(Post $post){
         $access_id = $this->settings->get('hamcq-filter.aliyun-content-check.access_id');
         $access_sec = $this->settings->get('hamcq-filter.aliyun-content-check.access_sec');
+        $skip_lable_stirng = $this->settings->get('hamcq-filter.aliyun-content-check.skip_label');
+        $skip_lable = explode(",", $skip_lable_stirng);
         if(!$access_id || !$access_sec){
             return;
         }
@@ -179,7 +181,7 @@ class CheckPost
         $runtime->readTimeout = 10000;
         $runtime->connectTimeout = 10000;
         if(mb_strlen($content)>600){
-            $this->aliyunCheckLongText($post, $client, $content);
+            $this->aliyunCheckLongText($post, $client, $content,$skip_lable);
             return;     
         }
         try {
@@ -194,6 +196,9 @@ class CheckPost
             if(Utils::equalNumber(200, $response->statusCode) && $response->body->data){
                 $data = $response->body->data->toMap();
                 if( isset($data["labels"])&& $data["labels"] != "" ){
+                    if(count($skip_lable) > 0 && in_array($data["labels"],$skip_lable)){
+                        return;
+                    }
                     $this->flagPostForAliyun($post, $data["labels"], json_encode($response->body));
                     if ((bool) $this->settings->get('fof-filter.emailWhenFlagged') && $post->emailed == 0) {
                         $this->sendEmail($post);
@@ -213,7 +218,7 @@ class CheckPost
     }
 
     //aliyunCheckLongText 阿里云接口限制检测文本最大600字符
-    public function aliyunCheckLongText(Post $post, $client, $content)
+    public function aliyunCheckLongText(Post $post, $client, $content,$skip_lable)
     {
         $len = mb_strlen($content);
         for($i=0;$i<$len;$i+=600){
@@ -231,6 +236,9 @@ class CheckPost
                 if(Utils::equalNumber(200, $response->statusCode) && $response->body->data){
                     $data = $response->body->data->toMap();
                     if( isset($data["labels"])&& $data["labels"] != "" ){
+                        if(count($skip_lable) > 0 && in_array($data["labels"],$skip_lable)){
+                            return;
+                        }
                         $this->flagPostForAliyun($post, $data["labels"], json_encode($response->body));
                         if ((bool) $this->settings->get('fof-filter.emailWhenFlagged') && $post->emailed == 0) {
                             $this->sendEmail($post);
